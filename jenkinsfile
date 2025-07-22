@@ -1,0 +1,20 @@
+pipeline {
+  agent any
+  stages {
+    stage('Install') {
+      steps {
+        sh 'npm install'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'npm test'
+      }
+    }
+    stage('Report') {
+      steps {
+        junit 'coverage/junit.xml'  // ถ้ามีแปลงผลลัพธ์ Jest เป็น JUnit
+      }
+    }
+  }
+}
