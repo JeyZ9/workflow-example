@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image "node:22-alpine"
+      args '-u root'
+    }
+  }
   environment {
     APP_NAME = "workflow testing"
     IMAGE_NAME = "workflow"
