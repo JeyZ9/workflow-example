@@ -1,4 +1,5 @@
 version: "3.1"
+
 services:
   jenkinmaster:
     image: jenkin-master
@@ -9,7 +10,8 @@ services:
     ports:
       - 8484:8080
     volumes:
-      - jenkins_home:/var/jenkins_home
+      - ./jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock  # เพื่อ debug docker ได้จาก Jenkins
     environment:
       - DOCKER_HOST=tcp://dind:2375
     depends_on:
@@ -24,5 +26,6 @@ services:
     command:
       - --storage-driver=overlay2
 
-volumes:
-  jenkins_home:
+# volumes:
+  # optional: ใช้แค่ถ้ายังอยากใช้ named volume แบบเก่า
+  # jenkins_home:

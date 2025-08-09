@@ -5,6 +5,16 @@ pipeline {
     } 
   }
   stages {
+    stage('Test Docker') {
+        steps {
+            script {
+                docker.image('node:22-alpine').inside {
+                    sh 'echo Hello from container'
+                    sh 'sleep 60'
+                }
+            }
+        }
+    }
     stage('Install') {
       steps {
         sh 'npm install'

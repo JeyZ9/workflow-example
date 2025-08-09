@@ -22,5 +22,5 @@ USER jenkins
 
 RUN jenkins-plugin-cli --plugins \
     blueocean:1.27.5 \
-    docker-workflow:1.28
-
+    docker-workflow:1.28 \
+    nodejs:1.6.1
