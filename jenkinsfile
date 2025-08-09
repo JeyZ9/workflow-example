@@ -1,7 +1,8 @@
 pipeline {
-  agent any
-  tools {
-    nodejs 'Node 18'
+  agent { 
+    docker {
+       image 'node:22-alpine' 
+    } 
   }
   stages {
     stage('Install') {
