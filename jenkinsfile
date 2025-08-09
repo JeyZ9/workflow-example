@@ -13,8 +13,12 @@ pipeline {
       }
     }
     stage('Test') {
-      docker.image("${IMAGE_NAME}").inside('-u root') {
-        sh 'npm test'
+      steps {
+        script {
+          docker.image("${IMAGE_NAME}").inside('-u root') {
+            sh 'npm test'
+          }
+        }
       }
     }
     stage('Report') {
