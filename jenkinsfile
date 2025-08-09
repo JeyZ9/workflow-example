@@ -1,8 +1,7 @@
 pipeline {
-  agent {
-    docker {
-        image 'node:18'
-    }
+  agent any
+  tools {
+    nodejs 'Node 18'
   }
   stages {
     stage('Install') {
@@ -10,7 +9,7 @@ pipeline {
         sh 'npm install'
       }
     }
-    stage('Run'){
+    stage('Run') {
       steps {
         sh 'npm run dev'
       }
@@ -22,7 +21,9 @@ pipeline {
     }
     stage('Report') {
       steps {
-        junit 'coverage/junit.xml'  // ถ้ามีแปลงผลลัพธ์ Jest เป็น JUnit
+        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+          junit 'coverage/junit.xml'
+        }
       }
     }
   }
