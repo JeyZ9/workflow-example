@@ -1,9 +1,15 @@
 pipeline {
   agent any
+
+  tools {
+    nodejs 'node-22'  // ใช้ NodeJS Plugin
+  }
+
   environment {
     APP_NAME = "workflow testing"
     IMAGE_NAME = "workflow"
   }
+
   stages {
     stage("Build Image") {
       steps {
@@ -12,15 +18,13 @@ pipeline {
         sh "docker build -t ${IMAGE_NAME} ."
       }
     }
+
     stage('Test') {
       steps {
-        script {
-          docker.image("${IMAGE_NAME}").inside('-u root') {
-            sh 'npm test'
-          }
-        }
+        sh 'npm test'
       }
     }
+
     stage('Report') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
@@ -28,5 +32,3 @@ pipeline {
         }
       }
     }
-  }
-}
