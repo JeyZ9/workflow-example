@@ -5,17 +5,29 @@ pipeline {
     nodejs 'node-22'  // ใช้ NodeJS Plugin
   }
 
-  environment {
-    APP_NAME = "workflow testing"
-    IMAGE_NAME = "workflow"
-  }
+  // environment {
+    // APP_NAME = "workflow testing"
+    // IMAGE_NAME = "workflow"
+  // }
 
   stages {
-    stage("Build Image") {
+    // stage("Build Image") {
+    //   steps {
+    //     sh "echo ${APP_NAME}"
+    //     sh "docker version"
+    //     sh "docker build -t ${IMAGE_NAME} ."
+    //   }
+    // }
+
+    stage('Install') {
       steps {
-        sh "echo ${APP_NAME}"
-        sh "docker version"
-        sh "docker build -t ${IMAGE_NAME} ."
+        sh 'npm install'
+      }
+    }
+
+    stage('Run') {
+      steps {
+        sh 'node index.js'
       }
     }
 
