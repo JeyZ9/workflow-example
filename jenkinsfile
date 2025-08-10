@@ -1,42 +1,19 @@
 pipeline {
   agent any
-
   tools {
     nodejs 'node-22'  // ใช้ NodeJS Plugin
   }
-
-  // environment {
-    // APP_NAME = "workflow testing"
-    // IMAGE_NAME = "workflow"
-  // }
-
   stages {
-    // stage("Build Image") {
-    //   steps {
-    //     sh "echo ${APP_NAME}"
-    //     sh "docker version"
-    //     sh "docker build -t ${IMAGE_NAME} ."
-    //   }
-    // }
-
     stage('Install') {
-      steps {
-        sh 'npm install'
-      }
+        steps {
+            sh 'npm install'
+        }
     }
-
-    stage('Run') {
-      steps {
-        sh 'node index.js'
-      }
-    }
-
     stage('Test') {
       steps {
         sh 'npm test'
       }
     }
-
     stage('Report') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
