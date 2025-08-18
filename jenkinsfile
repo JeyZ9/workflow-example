@@ -1,0 +1,25 @@
+pipeline {
+  agent any
+  tools {
+    nodejs 'node-22'  // ใช้ NodeJS Plugin
+  }
+  stages {
+    // stage('Install') {
+    //     steps {
+    //         sh 'npm install'
+    //     }
+    // }
+    stage('Test') {
+      steps {
+        sh 'npm test'
+      }
+    }
+    stage('Report') {
+      steps {
+        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+          junit 'coverage/junit.xml'
+        }
+      }
+    }
+  }
+}
